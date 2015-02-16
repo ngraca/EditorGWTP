@@ -1,0 +1,17 @@
+#Mac OS X generated files
+.DS_Store*
+Thumbs.db
+
+#Compiled 
+target
+
+#eclipse
+.classpath
+.project
+.settings
+.gwt
+
+#intellij
+/.idea
+
+*.iml
