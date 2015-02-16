@@ -1,0 +1,51 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:e='urn:import:com.google.gwt.editor.ui.client'
+             xmlns:dp='urn:import:com.google.gwt.user.datepicker.client'
+             xmlns:ed="urn:import:pt.scalablesolutions.client.editor">
+    <g:HTMLPanel>
+        <div>
+            Name:
+            <e:ValueBoxEditorDecorator ui:field="name">
+                <e:valuebox>
+                    <g:TextBox/>
+                </e:valuebox>
+            </e:ValueBoxEditorDecorator>
+        </div>
+        <div>
+            Password:
+            <e:ValueBoxEditorDecorator ui:field="password">
+                <e:valuebox>
+                    <g:PasswordTextBox/>
+                </e:valuebox>
+            </e:ValueBoxEditorDecorator>
+        </div>
+        <div>
+            Verify Password:
+            <e:ValueBoxEditorDecorator ui:field="passwordVerify">
+                <e:valuebox>
+                    <g:PasswordTextBox/>
+                </e:valuebox>
+            </e:ValueBoxEditorDecorator>
+        </div>
+        <div>
+            Age:
+            <e:ValueBoxEditorDecorator ui:field="age">
+                <e:valuebox>
+                    <g:IntegerBox/>
+                </e:valuebox>
+            </e:ValueBoxEditorDecorator>
+        </div>
+        <div>
+            Birth Date:
+            <e:ValueBoxEditorDecorator ui:field="birthDate">
+                <e:valuebox>
+                    <ed:DateBox/>
+                </e:valuebox>
+            </e:ValueBoxEditorDecorator>
+        </div>
+        <div>
+            <g:Button text="Save" ui:field="save"/>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>
