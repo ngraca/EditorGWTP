@@ -10,6 +10,33 @@ import java.lang.annotation.*;
 
 public class PasswordsValidator implements ConstraintValidator<PasswordsValidator.PasswordsEqual, Person> {
 
+    private String errorMessage;
+    private String[] fields;
+
+    @Override
+    public void initialize(PasswordsEqual constraintAnnotation) {
+        this.errorMessage = constraintAnnotation.message();
+        this.fields = constraintAnnotation.fields();
+    }
+
+    @Override
+    public boolean isValid(Person value, ConstraintValidatorContext context) {
+        if (value == null) {
+            return true;
+        }
+        String password = value.getPassword();
+        String passwordVerify = value.getPasswordVerify();
+        boolean valid = (password == null && passwordVerify == null) || (password != null && password.equals(passwordVerify));
+        if (!valid) {
+            context.disableDefaultConstraintViolation();
+            ConstraintValidatorContext.ConstraintViolationBuilder constraintViolationBuilder = context.buildConstraintViolationWithTemplate(errorMessage);
+            for (String field : fields) {
+                constraintViolationBuilder.addNode(field).addConstraintViolation();
+            }
+        }
+        return valid;
+    }
+
     @Target({ElementType.TYPE, ElementType.FIELD})
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
@@ -23,31 +50,8 @@ public class PasswordsValidator implements ConstraintValidator<PasswordsValidato
 
         Class<? extends Payload>[] payload() default {};
 
-    }
-    
-    private String errorMessage;
+        String[] fields() default {};
 
-    @Override
-    public void initialize(PasswordsEqual constraintAnnotation) {
-        this.errorMessage = constraintAnnotation.message();
-    }
-
-    @Override
-    public boolean isValid(Person value, ConstraintValidatorContext context) {
-        if (value == null) {
-            return true;
-        }
-        String password = value.getPassword();
-        String passwordVerify = value.getPasswordVerify();
-        boolean valid = (password == null && passwordVerify == null) || (password != null && password.equals(passwordVerify));
-        if (!valid)
-        {
-            context.disableDefaultConstraintViolation();
-            ConstraintValidatorContext.ConstraintViolationBuilder constraintViolationBuilder = context.buildConstraintViolationWithTemplate(errorMessage);
-            constraintViolationBuilder.addNode("password").addConstraintViolation();
-            constraintViolationBuilder.addNode("passwordVerify").addConstraintViolation();
-        }
-        return valid;
     }
 
 }

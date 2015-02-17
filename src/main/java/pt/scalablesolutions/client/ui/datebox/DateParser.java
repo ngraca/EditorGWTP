@@ -1,4 +1,4 @@
-package pt.scalablesolutions.client.editor;
+package pt.scalablesolutions.client.ui.datebox;
 
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.text.shared.Parser;

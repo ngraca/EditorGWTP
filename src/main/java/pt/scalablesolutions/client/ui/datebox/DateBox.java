@@ -1,10 +1,8 @@
-package pt.scalablesolutions.client.editor;
+package pt.scalablesolutions.client.ui.datebox;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.*;
-import com.google.gwt.event.logical.shared.CloseEvent;
-import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.shared.DateTimeFormat;
@@ -17,49 +15,9 @@ import java.util.Date;
 
 public class DateBox extends ValueBox<Date> {
 
-    private class DateBoxHandler implements ValueChangeHandler<Date>,
-            FocusHandler, ClickHandler, KeyDownHandler {
-
-        public void onClick(ClickEvent event) {
-            showDatePicker();
-        }
-
-        public void onFocus(FocusEvent event) {
-            if (allowDPShow && isDatePickerShowing() == false) {
-                showDatePicker();
-            }
-        }
-
-        public void onKeyDown(KeyDownEvent event) {
-            switch (event.getNativeKeyCode()) {
-                case KeyCodes.KEY_ENTER:
-                case KeyCodes.KEY_TAB:
-                    updateDateFromTextBox();
-                    // Deliberate fall through
-                case KeyCodes.KEY_ESCAPE:
-                case KeyCodes.KEY_UP:
-                    hideDatePicker();
-                    break;
-                case KeyCodes.KEY_DOWN:
-                    showDatePicker();
-                    break;
-            }
-        }
-
-        public void onValueChange(ValueChangeEvent<Date> event) {
-            Date oldDate = getValue();
-            setValue(event.getValue());
-            DateChangeEvent.fireIfNotEqualDates(DateBox.this, oldDate, event.getValue());
-            hideDatePicker();
-            preventDatePickerPopup();
-            DateBox.this.setFocus(true);
-        }
-    }
-
     private final PopupPanel popup;
     private final DatePicker picker;
     private boolean allowDPShow = true;
-
     public DateBox() {
         this(DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_SHORT));
     }
@@ -118,5 +76,44 @@ public class DateBox extends ValueBox<Date> {
 
     private void updateDateFromTextBox() {
         setValue(picker.getValue(), true);
+    }
+
+    private class DateBoxHandler implements ValueChangeHandler<Date>,
+            FocusHandler, ClickHandler, KeyDownHandler {
+
+        public void onClick(ClickEvent event) {
+            showDatePicker();
+        }
+
+        public void onFocus(FocusEvent event) {
+            if (allowDPShow && isDatePickerShowing() == false) {
+                showDatePicker();
+            }
+        }
+
+        public void onKeyDown(KeyDownEvent event) {
+            switch (event.getNativeKeyCode()) {
+                case KeyCodes.KEY_ENTER:
+                case KeyCodes.KEY_TAB:
+                    updateDateFromTextBox();
+                    // Deliberate fall through
+                case KeyCodes.KEY_ESCAPE:
+                case KeyCodes.KEY_UP:
+                    hideDatePicker();
+                    break;
+                case KeyCodes.KEY_DOWN:
+                    showDatePicker();
+                    break;
+            }
+        }
+
+        public void onValueChange(ValueChangeEvent<Date> event) {
+            Date oldDate = getValue();
+            setValue(event.getValue());
+            DateChangeEvent.fireIfNotEqualDates(DateBox.this, oldDate, event.getValue());
+            hideDatePicker();
+            preventDatePickerPopup();
+            DateBox.this.setFocus(true);
+        }
     }
 }

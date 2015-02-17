@@ -1,41 +1,26 @@
 package pt.scalablesolutions.client.application.home;
 
-import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
-import com.google.gwt.event.dom.client.*;
-import com.google.gwt.validation.client.impl.ConstraintValidatorContextImpl;
-import com.google.gwt.validation.client.impl.ConstraintViolationImpl;
-import com.google.gwt.validation.client.impl.PathImpl;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.validation.client.impl.Validation;
 import com.google.web.bindery.event.shared.EventBus;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import pt.scalablesolutions.client.application.ApplicationPresenter;
+import pt.scalablesolutions.client.application.EditorView;
 import pt.scalablesolutions.client.place.NameTokens;
+import pt.scalablesolutions.client.validation.ViolationUtil;
 
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 public class HomePagePresenter extends Presenter<HomePagePresenter.MyView, HomePagePresenter.MyProxy> {
-    public interface MyView extends EditorView<Person> {
-        HasClickHandlers getSaveButton();
-
-        HandlerRegistration addHandler(DomEvent.Type<KeyUpHandler> type, KeyUpHandler keyUpHandler);
-    }
-
-    @ProxyStandard
-    @NameToken(NameTokens.home)
-    public interface MyProxy extends ProxyPlace<HomePagePresenter> {
-    }
-
     private SimpleBeanEditorDriver driver;
 
     @Inject
@@ -48,12 +33,6 @@ public class HomePagePresenter extends Presenter<HomePagePresenter.MyView, HomeP
     @Override
     protected void onBind() {
         super.onBind();
-        registerHandler(getView().addHandler(KeyUpEvent.getType(), new KeyUpHandler() {
-            @Override
-            public void onKeyUp(KeyUpEvent event) {
-                driver.flush();
-            }
-        }));
         registerHandler(getView().getSaveButton().addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
@@ -66,27 +45,10 @@ public class HomePagePresenter extends Presenter<HomePagePresenter.MyView, HomeP
         Object person = driver.flush();
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<Object>> violations = validator.validate(person);
-        if (driver.hasErrors())
-        {
-            violations.addAll(createViolations(person, driver.getErrors()));
+        if (driver.hasErrors()) {
+            violations.addAll(ViolationUtil.convertErrorsIntoViolations(person, driver.getErrors()));
         }
         driver.setConstraintViolations(violations);
-    }
-
-    private Set<ConstraintViolation<Object>> createViolations(Object obj, List<EditorError> errors) {
-        Set<ConstraintViolation<Object>> violations = new HashSet<ConstraintViolation<Object>>();
-        for (EditorError error : errors) {
-            ConstraintViolationImpl.Builder<Object> builder = ConstraintViolationImpl.builder();
-            String absolutePath = error.getAbsolutePath();
-            PathImpl path = new PathImpl().append(absolutePath);
-            builder.setPropertyPath(path);
-
-            builder.setMessage(error.getMessage());
-            builder.setInvalidValue(error.getValue());
-            builder.setRootBean(obj);
-            violations.add(builder.build());
-        }
-        return violations;
     }
 
     @Override
@@ -99,5 +61,14 @@ public class HomePagePresenter extends Presenter<HomePagePresenter.MyView, HomeP
     protected void onReset() {
         super.onReset();
         driver.edit(new Person());
+    }
+
+    public interface MyView extends EditorView<Person> {
+        HasClickHandlers getSaveButton();
+    }
+
+    @ProxyStandard
+    @NameToken(NameTokens.home)
+    public interface MyProxy extends ProxyPlace<HomePagePresenter> {
     }
 }
