@@ -1,8 +1,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:e='urn:import:com.google.gwt.editor.ui.client'
-             xmlns:dp='urn:import:com.google.gwt.user.datepicker.client'
-             xmlns:ed="urn:import:pt.scalablesolutions.client.editor">
+             xmlns:ed="urn:import:pt.scalablesolutions.client.ui.datebox">
     <g:HTMLPanel>
         <div>
             Name:
