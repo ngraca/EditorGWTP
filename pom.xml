@@ -176,10 +176,9 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator-sources</artifactId>
+            <artifactId>hibernate-validator</artifactId>
             <version>4.1.0.Final</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/../lib/hibernate-validator-4.1.0.Final-sources.jar</systemPath>
+            <classifier>sources</classifier>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
