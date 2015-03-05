@@ -1,0 +1,17 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder' xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style>
+        .contents {
+            display: inline;
+        }
+
+        .errorLabel {
+            display: none;
+            white-space: pre;
+        }
+    </ui:style>
+    <ui:with field="editorRes" type="pt.scalablesolutions.client.ui.editor.EditorResources"/>
+    <g:HTMLPanel>
+        <g:SimplePanel ui:field="contents" stylePrimaryName="{style.contents}"/>
+        <g:Image resource="{editorRes.errorIcon}" ui:field="errorImage" visible="false"/>
+    </g:HTMLPanel>
+</ui:UiBinder>

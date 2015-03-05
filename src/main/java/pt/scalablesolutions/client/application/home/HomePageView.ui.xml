@@ -1,47 +1,48 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
-             xmlns:e='urn:import:com.google.gwt.editor.ui.client'
-             xmlns:ed="urn:import:pt.scalablesolutions.client.ui.datebox">
+             xmlns:db="urn:import:pt.scalablesolutions.client.ui.datebox"
+             xmlns:ed="urn:import:pt.scalablesolutions.client.ui.editor"
+        >
     <g:HTMLPanel>
         <div>
             Name:
-            <e:ValueBoxEditorDecorator ui:field="name">
-                <e:valuebox>
+            <ed:ValueBoxEditorDecorator ui:field="name">
+                <ed:valuebox>
                     <g:TextBox/>
-                </e:valuebox>
-            </e:ValueBoxEditorDecorator>
+                </ed:valuebox>
+            </ed:ValueBoxEditorDecorator>
         </div>
         <div>
             Password:
-            <e:ValueBoxEditorDecorator ui:field="password">
-                <e:valuebox>
+            <ed:ValueBoxEditorDecorator ui:field="password">
+                <ed:valuebox>
                     <g:PasswordTextBox/>
-                </e:valuebox>
-            </e:ValueBoxEditorDecorator>
+                </ed:valuebox>
+            </ed:ValueBoxEditorDecorator>
         </div>
         <div>
             Verify Password:
-            <e:ValueBoxEditorDecorator ui:field="passwordVerify">
-                <e:valuebox>
+            <ed:ValueBoxEditorDecorator ui:field="passwordVerify">
+                <ed:valuebox>
                     <g:PasswordTextBox/>
-                </e:valuebox>
-            </e:ValueBoxEditorDecorator>
+                </ed:valuebox>
+            </ed:ValueBoxEditorDecorator>
         </div>
         <div>
             Age:
-            <e:ValueBoxEditorDecorator ui:field="age">
-                <e:valuebox>
+            <ed:ValueBoxEditorDecorator ui:field="age">
+                <ed:valuebox>
                     <g:IntegerBox/>
-                </e:valuebox>
-            </e:ValueBoxEditorDecorator>
+                </ed:valuebox>
+            </ed:ValueBoxEditorDecorator>
         </div>
         <div>
             Birth Date:
-            <e:ValueBoxEditorDecorator ui:field="birthDate">
-                <e:valuebox>
-                    <ed:DateBox/>
-                </e:valuebox>
-            </e:ValueBoxEditorDecorator>
+            <ed:ValueBoxEditorDecorator ui:field="birthDate">
+                <ed:valuebox>
+                    <db:DateBox/>
+                </ed:valuebox>
+            </ed:ValueBoxEditorDecorator>
         </div>
         <div>
             <g:Button text="Save" ui:field="save"/>
