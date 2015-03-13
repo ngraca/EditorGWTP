@@ -120,7 +120,7 @@ public class ValueBoxEditorDecorator<T> extends Composite implements
         }
 
         errorImage.setTitle(sb.substring(1));
-        errorImage.setVisible(false);
+        errorImage.setVisible(true);
     }
 
     interface Binder extends UiBinder<Widget, ValueBoxEditorDecorator<?>> {

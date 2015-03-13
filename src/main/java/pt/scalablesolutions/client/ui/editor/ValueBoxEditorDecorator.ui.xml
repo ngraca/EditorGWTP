@@ -5,13 +5,18 @@
         }
 
         .errorLabel {
-            display: none;
-            white-space: pre;
+            vertical-align: middle;
+        }
+
+        .errorBorder {
+            border-color: red;
+
         }
     </ui:style>
     <ui:with field="editorRes" type="pt.scalablesolutions.client.ui.editor.EditorResources"/>
     <g:HTMLPanel>
         <g:SimplePanel ui:field="contents" stylePrimaryName="{style.contents}"/>
-        <g:Image resource="{editorRes.errorIcon}" ui:field="errorImage" visible="false"/>
+        <g:Image resource="{editorRes.errorIcon}" ui:field="errorImage" visible="false"
+                 addStyleNames="{style.errorLabel}"/>
     </g:HTMLPanel>
 </ui:UiBinder>
